@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-stone-50 pt-32 p-10 flex flex-col">
+    <div class="max-w-7xl w-full">
+        <header class="mb-12">
+            <h2 class="text-4xl font-black text-gray-900 tracking-tight mb-2">
+                Nuestra <span class="text-red-500">Recomendación</span>
+            </h2>
+            <p class="text-gray-500 font-medium">Descubre los platos más exclusivos de nuestra cocina artesanal.</p>
+        </header>
+
+        <!-- Food Grid: 4 columns on LG/XL to ensure 2 rows with 8 items -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @for (food of foods; track $index) {
+            <app-food-card [food]="food"></app-food-card>
+            }
+        </div>
+    </div>
+</div>

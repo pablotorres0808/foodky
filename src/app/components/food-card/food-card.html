@@ -1,0 +1,82 @@
+<!-- Premium FoodCard Component - Compact Edition -->
+<div class="group relative w-full max-w-[320px] transition-all duration-700 hover:-translate-y-3">
+    <!-- Background Glow (Reactive) -->
+    <div
+        class="absolute -inset-3 bg-gradient-to-tr from-orange-500/15 to-red-500/15 rounded-[3rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+    </div>
+
+    <!-- Main Card Container -->
+    <div
+        class="relative bg-white/90 backdrop-blur-xl rounded-[3rem] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-white/50 overflow-hidden">
+
+        <!-- Image Section - Squareish Proportions -->
+        <div class="relative h-48 w-full rounded-[2.5rem] overflow-hidden shadow-inner">
+            <img [src]="food.img_url" [alt]="food.name"
+                class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" />
+            <!-- Dramatic Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-70">
+            </div>
+        </div>
+
+        <!-- Category Label (Small Floating) -->
+        <div class="absolute bottom-4 left-4">
+            <span
+                class="bg-red-500 text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg">
+                {{ food.category }}
+            </span>
+        </div>
+
+        <!-- Availability Overlay -->
+        @if (!food.is_available) {
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+            <div class="bg-white/90 px-6 py-2 rounded-xl">
+                <span class="text-black text-[10px] font-black uppercase tracking-widest">Agotado</span>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Content Section - Tightened Spacing -->
+    <div class="pt-5 pb-2 px-3">
+        <!-- Info Header -->
+        <div class="flex justify-between items-start mb-3 gap-2">
+            <div class="flex flex-col flex-grow">
+                <h3 class="text-lg font-black text-gray-900 tracking-tight leading-tight line-clamp-1">
+                    {{ food.name }}
+                </h3>
+                <div class="h-0.5 w-8 bg-red-500 rounded-full transition-all duration-500 group-hover:w-full"></div>
+            </div>
+            <div class="flex items-center text-orange-500 shrink-0">
+                <span class="text-xs font-bold mr-0.5">$</span>
+                <span class="text-lg font-black tracking-tighter">{{ food.price }}</span>
+            </div>
+        </div>
+
+        <p class="text-gray-500 text-[11px] font-medium leading-relaxed mb-6 line-clamp-2 italic opacity-75">
+            "{{ food.description }}"
+        </p>
+
+        <!-- Layered Button (Compact Size) -->
+        <div class="w-full">
+            <div [class.opacity-40]="!food.is_available" [class.grayscale]="!food.is_available" class="relative">
+                <div class="bg-gradient-to-b from-red-500/20 to-transparent p-[1.5px] rounded-[18px]">
+                    <button [disabled]="!food.is_available"
+                        class="group/btn w-full p-[2px] rounded-[16.5px] bg-gradient-to-b from-white to-orange-50/50 shadow-sm active:scale-95 transition-all duration-300 disabled:cursor-not-allowed cursor-pointer">
+                        <div
+                            class="bg-gradient-to-br from-red-500 to-red-600 rounded-[14px] px-4 py-3 transition-colors group-hover/btn:from-orange-500 group-hover/btn:to-orange-600">
+                            <div class="flex gap-2 items-center justify-center text-white">
+                                <span class="font-black text-[10px] uppercase tracking-widest">Ordenar</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
