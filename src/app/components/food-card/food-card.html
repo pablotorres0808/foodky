@@ -18,12 +18,27 @@
             </div>
         </div>
 
-        <!-- Category Label (Small Floating) -->
-        <div class="absolute bottom-4 left-4">
+        <!-- Category & Availability Labels -->
+        <div class="absolute bottom-4 left-4 flex flex-col gap-2">
+            <!-- Category Label (Small Floating) -->
             <span
-                class="bg-red-500 text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg">
+                class="bg-red-500 text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg w-max">
                 {{ food.category }}
             </span>
+
+            <!-- Availability Label -->
+            @if(food.is_available) {
+            <span
+                class="bg-orange-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center justify-center border border-white/20 w-max">
+                Disponible
+            </span>
+            } @else {
+            <span
+                class="bg-stone-800/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1.5 border border-white/10 w-max">
+                <span class="w-1.5 h-1.5 bg-red-500 rounded-full opacity-70"></span>
+                Agotado
+            </span>
+            }
         </div>
 
         <!-- Availability Overlay -->

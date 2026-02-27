@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,4 +8,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.html',
   styles: ``,
 })
-export class Navbar { }
+export class Navbar {
+  isModalOpen = signal(false);
+}
