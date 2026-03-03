@@ -10,60 +10,49 @@
         class="relative bg-white/90 backdrop-blur-xl rounded-[3rem] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-white/50 overflow-hidden">
 
         <!-- Image Section - Squareish Proportions -->
-        <div class="relative h-48 w-full rounded-[2.5rem] overflow-hidden shadow-inner">
-            <img [src]="food.img_url" [alt]="food.name"
+        <div class="relative h-48 w-full rounded-[2.5rem] overflow-hidden shadow-inner bg-stone-100">
+            @if(food.url_img) {
+            <img [src]="food.url_img" [alt]="food.name"
                 class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" />
+            } @else {
+            <!-- Premium Fallback for Missing Images -->
+            <div
+                class="w-full h-full bg-gradient-to-br from-stone-100 to-stone-200 flex flex-col items-center justify-center transition-transform duration-1000 ease-out group-hover:scale-105">
+                <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-2">
+                    <img src="/favicon.png" alt="RecetasApp" class="w-8 h-8 opacity-50 grayscale" />
+                </div>
+            </div>
+            }
             <!-- Dramatic Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-70">
             </div>
         </div>
 
-        <!-- Category & Availability Labels -->
-        <div class="absolute bottom-4 left-4 flex flex-col gap-2">
-            <!-- Category Label (Small Floating) -->
-            <span
-                class="bg-red-500 text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg w-max">
-                {{ food.category }}
-            </span>
-
-            <!-- Availability Label -->
-            @if(food.is_available) {
-            <span
-                class="bg-orange-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center justify-center border border-white/20 w-max">
-                Disponible
-            </span>
-            } @else {
-            <span
-                class="bg-stone-800/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1.5 border border-white/10 w-max">
-                <span class="w-1.5 h-1.5 bg-red-500 rounded-full opacity-70"></span>
-                Agotado
-            </span>
-            }
-        </div>
-
-        <!-- Availability Overlay -->
-        @if (!food.is_available) {
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-            <div class="bg-white/90 px-6 py-2 rounded-xl">
-                <span class="text-black text-[10px] font-black uppercase tracking-widest">Agotado</span>
-            </div>
-        </div>
-        }
+        <!-- Dramatic Overlay removed to keep image clean -->
     </div>
 
     <!-- Content Section - Tightened Spacing -->
     <div class="pt-5 pb-2 px-3">
+        <!-- Category Badge (Moved here) -->
+        <div class="flex items-center gap-2 mb-2">
+            <span class="text-[10px] font-black uppercase tracking-[0.15em] text-red-500/80">
+                {{ food.category }}
+            </span>
+            <div class="h-px flex-grow bg-stone-100"></div>
+            @if(!food.available) {
+            <span class="text-[9px] font-bold text-red-500/60 uppercase tracking-tight line-through">Agotado</span>
+            }
+        </div>
+
         <!-- Info Header -->
         <div class="flex justify-between items-start mb-3 gap-2">
             <div class="flex flex-col flex-grow">
-                <h3 class="text-lg font-black text-gray-900 tracking-tight leading-tight line-clamp-1">
+                <h3 class="text-xl font-black text-gray-900 tracking-tight leading-tight">
                     {{ food.name }}
                 </h3>
-                <div class="h-0.5 w-8 bg-red-500 rounded-full transition-all duration-500 group-hover:w-full"></div>
             </div>
             <div class="flex items-center text-orange-500 shrink-0">
-                <span class="text-xs font-bold mr-0.5">$</span>
-                <span class="text-lg font-black tracking-tighter">{{ food.price }}</span>
+                <span class="text-lg font-black tracking-tighter">{{ food.price | currency }}</span>
             </div>
         </div>
 
@@ -73,9 +62,9 @@
 
         <!-- Layered Button (Compact Size) -->
         <div class="w-full">
-            <div [class.opacity-40]="!food.is_available" [class.grayscale]="!food.is_available" class="relative">
+            <div [class.opacity-40]="!food.available" [class.grayscale]="!food.available" class="relative">
                 <div class="bg-gradient-to-b from-red-500/20 to-transparent p-[1.5px] rounded-[18px]">
-                    <button [disabled]="!food.is_available"
+                    <button [disabled]="!food.available"
                         class="group/btn w-full p-[2px] rounded-[16.5px] bg-gradient-to-b from-white to-orange-50/50 shadow-sm active:scale-95 transition-all duration-300 disabled:cursor-not-allowed cursor-pointer">
                         <div
                             class="bg-gradient-to-br from-red-500 to-red-600 rounded-[14px] px-4 py-3 transition-colors group-hover/btn:from-orange-500 group-hover/btn:to-orange-600">

@@ -3,7 +3,8 @@ export interface Food {
     name: string;
     description: string;
     price: number;
-    img_url: string;
+    url_img: string | null;
     category: string;
-    is_available: boolean;
+    available: boolean;
+    created_at: string;
 }

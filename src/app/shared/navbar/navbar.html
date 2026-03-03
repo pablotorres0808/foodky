@@ -1,9 +1,9 @@
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl z-50">
+<nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] md:w-[90%] max-w-4xl z-50">
     <div
-        class="bg-white border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-[2.5rem] px-8 py-4 flex items-center justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
+        class="bg-white border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-[2rem] md:rounded-[2.5rem] px-4 md:px-8 py-3 md:py-4 flex items-center justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
 
         <!-- Logo area -->
-        <div class="flex items-center gap-3 group cursor-pointer">
+        <div class="flex items-center gap-2 md:gap-3 group cursor-pointer">
             <img src="/favicon.png" alt="RecetasApp Logo"
                 class="w-10 h-10 object-contain transition-transform group-hover:rotate-12" />
             <span
@@ -26,15 +26,15 @@
         </div>
 
         <!-- Action area -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 md:gap-4">
             <button (click)="isModalOpen.set(true)"
-                class="bg-red-500 text-white px-4 py-2.5 rounded-2xl shadow-[0_8px_16px_rgba(239,68,68,0.3)] transition-all hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] active:scale-90 cursor-pointer flex items-center gap-2 font-bold text-sm">
+                class="bg-red-500 text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl md:rounded-2xl shadow-[0_8px_16px_rgba(239,68,68,0.3)] transition-all hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] active:scale-90 cursor-pointer flex items-center gap-2 font-bold text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                         clip-rule="evenodd" />
                 </svg>
-                Agregar Platillo
+                <span class="hidden sm:inline">Agregar Platillo</span>
             </button>
 
             <button class="p-2 text-gray-500 hover:text-gray-900 transition-colors cursor-pointer">
@@ -79,42 +79,53 @@
                 class="text-red-500">Platillo</span></h3>
 
         <!-- Form fields -->
-        <form class="space-y-4">
+        <form [formGroup]="formfood" class="space-y-4">
             <div>
                 <label class="block mb-1.5 text-sm font-bold text-gray-700">IMG URL:</label>
-                <input type="text" placeholder="https://..."
+                <input formControlName="url_img" type="text" placeholder="https://..."
                     class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none" />
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Nombre:</label>
-                    <input type="text" placeholder="Ej. Tacos al Pastor"
-                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none" />
+                    <input formControlName="name" type="text" placeholder="Ej. Tacos al Pastor"
+                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
+                        [class.border-red-500]="formfood.get('name')?.invalid && formfood.get('name')?.touched" />
+                    @if (formfood.get('name')?.invalid && formfood.get('name')?.touched) {
+                    <span class="mt-1.5 text-xs text-red-500 font-medium block">
+                        Por favor ingresa un nombre válido
+                    </span>
+                    }
                 </div>
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Precio:</label>
-                    <input type="number" placeholder="Ej. 120" min="0" step="0.01" required
-                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:ring-1 invalid:[&:not(:placeholder-shown):not(:focus)]:ring-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-500 peer" />
-                    <span
-                        class="mt-1.5 hidden text-xs text-red-500 font-medium peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">Por
-                        favor ingresa un precio válido mayor a 0</span>
+                    <input formControlName="price" type="number" placeholder="Ej. 120" min="0" step="0.01"
+                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
+                        [class.border-red-500]="formfood.get('price')?.invalid && formfood.get('price')?.touched" />
+                    @if (formfood.get('price')?.invalid && formfood.get('price')?.touched) {
+                    <span class="mt-1.5 text-xs text-red-500 font-medium block">
+                        Por favor ingresa un precio válido mayor a 0
+                    </span>
+                    }
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Categoría:</label>
-                    <input type="text" placeholder="Ej. Mexicana" pattern="[A-Za-zÀ-ÿ\s]+" required
-                        title="Solo se permiten letras"
-                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:ring-1 invalid:[&:not(:placeholder-shown):not(:focus)]:ring-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-500 peer" />
-                    <span
-                        class="mt-1.5 hidden text-xs text-red-500 font-medium peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">La
-                        categoría solo puede contener letras</span>
+                    <input formControlName="category" type="text" placeholder="Ej. Mexicana"
+                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
+                        [class.border-red-500]="formfood.get('category')?.invalid && formfood.get('category')?.touched" />
+                    @if (formfood.get('category')?.invalid && formfood.get('category')?.touched) {
+                    <span class="mt-1.5 text-xs text-red-500 font-medium block">
+                        La categoría solo puede contener letras
+                    </span>
+                    }
                 </div>
                 <div class="flex items-center mt-7">
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" value="" class="sr-only peer" checked>
+                        <input formControlName="available" type="checkbox" class="sr-only peer">
                         <div
                             class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500">
                         </div>
@@ -125,11 +136,11 @@
 
             <div>
                 <label class="block mb-1.5 text-sm font-bold text-gray-700">Descripción:</label>
-                <textarea rows="3" placeholder="Descripción del platillo..."
+                <textarea formControlName="description" rows="3" placeholder="Descripción del platillo..."
                     class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none resize-none"></textarea>
             </div>
 
-            <button type="button" (click)="isModalOpen.set(false)"
+            <button type="button" (click)="saveFood()"
                 class="w-full mt-4 bg-red-500 text-white font-bold rounded-xl px-5 py-4 text-center shadow-[0_8px_16px_rgba(239,68,68,0.3)] hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] transition-all active:scale-95 cursor-pointer text-base">
                 Guardar Platillo
             </button>
