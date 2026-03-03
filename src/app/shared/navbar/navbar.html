@@ -2,7 +2,7 @@
     <div
         class="bg-white border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-[2rem] md:rounded-[2.5rem] px-4 md:px-8 py-3 md:py-4 flex items-center justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
 
-        <!-- Logo area -->
+        <!-- el logo -->
         <div class="flex items-center gap-2 md:gap-3 group cursor-pointer">
             <img src="/favicon.png" alt="RecetasApp Logo"
                 class="w-10 h-10 object-contain transition-transform group-hover:rotate-12" />
@@ -12,7 +12,7 @@
             </span>
         </div>
 
-        <!-- Navigation links -->
+        <!-- links -->
         <div class="hidden md:flex items-center gap-8">
             <a href="#"
                 class="text-gray-900 font-bold text-sm tracking-wide transition-colors hover:text-red-500 relative group cursor-pointer">
@@ -25,7 +25,7 @@
                 class="text-gray-500 font-bold text-sm tracking-wide transition-colors hover:text-gray-900 cursor-pointer">Categorías</a>
         </div>
 
-        <!-- Action area -->
+        <!-- los botones del lado derecho -->
         <div class="flex items-center gap-2 md:gap-4">
             <button (click)="isModalOpen.set(true)"
                 class="bg-red-500 text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl md:rounded-2xl shadow-[0_8px_16px_rgba(239,68,68,0.3)] transition-all hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] active:scale-90 cursor-pointer flex items-center gap-2 font-bold text-sm">
@@ -64,7 +64,7 @@
     class="fixed inset-0 z-[100] flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
     <div
         class="bg-white rounded-[2.5rem] p-8 w-full max-w-lg shadow-[0_24px_48px_rgba(0,0,0,0.1)] relative transform transition-all animate-in zoom-in-95 duration-200">
-        <!-- Close Button -->
+        <!-- boton de cerrar -->
         <button (click)="isModalOpen.set(false)"
             class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors cursor-pointer bg-gray-100 rounded-full p-2 hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -74,11 +74,11 @@
             </svg>
         </button>
 
-        <!-- Title -->
+        <!-- encabezado -->
         <h3 class="text-2xl font-black text-gray-900 mb-6 tracking-tight">Agregar <span
                 class="text-red-500">Platillo</span></h3>
 
-        <!-- Form fields -->
+        <!-- los campos -->
         <form [formGroup]="formfood" class="space-y-4">
             <div>
                 <label class="block mb-1.5 text-sm font-bold text-gray-700">IMG URL:</label>
@@ -140,11 +140,19 @@
                     class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none resize-none"></textarea>
             </div>
 
-            <button type="button" (click)="saveFood()"
-                class="w-full mt-4 bg-red-500 text-white font-bold rounded-xl px-5 py-4 text-center shadow-[0_8px_16px_rgba(239,68,68,0.3)] hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] transition-all active:scale-95 cursor-pointer text-base">
+            <button type="button" (click)="saveFood()" [disabled]="formfood.invalid"
+                class="w-full mt-4 bg-red-500 text-white font-bold rounded-xl px-5 py-4 text-center shadow-[0_8px_16px_rgba(239,68,68,0.3)] hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] transition-all active:scale-95 cursor-pointer text-base disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed">
                 Guardar Platillo
             </button>
         </form>
+
+        <div class="mt-6 p-4 bg-stone-50 rounded-xl border border-gray-100 overflow-auto">
+            <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Estado del Formulario:</p>
+            <pre class="text-xs font-mono text-gray-700">{{ formfood.status }}</pre>
+            <hr class="my-3 border-gray-200">
+            <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Valores (JSON):</p>
+            <pre class="text-xs font-mono text-gray-700">{{ formfood.value | json }}</pre>
+        </div>
     </div>
 </div>
 }
