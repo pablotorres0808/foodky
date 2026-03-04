@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment.development';
+import { NewFood } from '../../interfaces/food.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +34,20 @@ export class FoodSupabaseService {
         }
 
         console.log(data);
+        return data;
+    }
+
+    async insertFood(newFood: NewFood) {
+        const { data, error } = await this.supabase
+            .from('foods')
+            .insert([newFood])
+            .select();
+
+        if (error) {
+            console.error('Error inserting food:', error);
+            return null;
+        }
+
         return data;
     }
 }

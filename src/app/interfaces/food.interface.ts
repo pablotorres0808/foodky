@@ -8,3 +8,11 @@ export interface Food {
     available: boolean;
     created_at: string;
 }
+
+export interface NewFood {
+    name: string;
+    description: string;
+    price: number;
+    url_img: string;
+    category: string;
+}
