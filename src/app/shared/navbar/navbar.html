@@ -63,7 +63,7 @@
 <div
     class="fixed inset-0 z-[100] flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
     <div
-        class="bg-white rounded-[2.5rem] p-8 w-full max-w-lg shadow-[0_24px_48px_rgba(0,0,0,0.1)] relative transform transition-all animate-in zoom-in-95 duration-200">
+        class="bg-white rounded-[2.5rem] p-7 w-full max-w-2xl shadow-[0_24px_48px_rgba(0,0,0,0.1)] relative transform transition-all animate-in zoom-in-95 duration-200">
         <!-- boton de cerrar -->
         <button (click)="isModalOpen.set(false)"
             class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors cursor-pointer bg-gray-100 rounded-full p-2 hover:bg-gray-200">
@@ -80,13 +80,18 @@
 
         <!-- los campos -->
         <form [formGroup]="formfood" class="space-y-4">
-            <div>
-                <label class="block mb-1.5 text-sm font-bold text-gray-700">IMG URL:</label>
-                <input formControlName="url_img" type="text" placeholder="https://..."
-                    class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none" />
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1.5 text-sm font-bold text-gray-700">IMG URL:</label>
+                    <input formControlName="url_img" type="text" placeholder="https://..."
+                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
+                        [class.border-red-500]="formfood.get('url_img')?.invalid && formfood.get('url_img')?.touched" />
+                    @if (formfood.get('url_img')?.invalid && formfood.get('url_img')?.touched) {
+                    <span class="mt-1.5 text-xs text-red-500 font-medium block">
+                        Por favor ingresa una URL válida
+                    </span>
+                    }
+                </div>
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Nombre:</label>
                     <input formControlName="name" type="text" placeholder="Ej. Tacos al Pastor"
@@ -98,6 +103,9 @@
                     </span>
                     }
                 </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Precio:</label>
                     <input formControlName="price" type="number" placeholder="Ej. 120" min="0" step="0.01"
@@ -105,13 +113,10 @@
                         [class.border-red-500]="formfood.get('price')?.invalid && formfood.get('price')?.touched" />
                     @if (formfood.get('price')?.invalid && formfood.get('price')?.touched) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa un precio válido mayor a 0
+                        Por favor ingresa un precio válido
                     </span>
                     }
                 </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Categoría:</label>
                     <input formControlName="category" type="text" placeholder="Ej. Mexicana"
@@ -119,11 +124,25 @@
                         [class.border-red-500]="formfood.get('category')?.invalid && formfood.get('category')?.touched" />
                     @if (formfood.get('category')?.invalid && formfood.get('category')?.touched) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        La categoría solo puede contener letras
+                        Por favor ingresa una categoría válida
                     </span>
                     }
                 </div>
-                <div class="flex items-center mt-7">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1.5 text-sm font-bold text-gray-700">Descripción:</label>
+                    <textarea formControlName="description" rows="2" placeholder="Descripción del platillo..."
+                        class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none resize-none"
+                        [class.border-red-500]="formfood.get('description')?.invalid && formfood.get('description')?.touched"></textarea>
+                    @if (formfood.get('description')?.invalid && formfood.get('description')?.touched) {
+                    <span class="mt-1.5 text-xs text-red-500 font-medium block">
+                        Por favor ingresa una descripción válida
+                    </span>
+                    }
+                </div>
+                <div class="flex items-center md:mt-7">
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input formControlName="available" type="checkbox" class="sr-only peer">
                         <div
@@ -134,25 +153,11 @@
                 </div>
             </div>
 
-            <div>
-                <label class="block mb-1.5 text-sm font-bold text-gray-700">Descripción:</label>
-                <textarea formControlName="description" rows="3" placeholder="Descripción del platillo..."
-                    class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none resize-none"></textarea>
-            </div>
-
             <button type="button" (click)="saveFood()" [disabled]="formfood.invalid"
                 class="w-full mt-4 bg-red-500 text-white font-bold rounded-xl px-5 py-4 text-center shadow-[0_8px_16px_rgba(239,68,68,0.3)] hover:bg-orange-500 hover:shadow-[0_8px_16px_rgba(249,115,22,0.3)] transition-all active:scale-95 cursor-pointer text-base disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed">
                 Guardar Platillo
             </button>
         </form>
-
-        <div class="mt-6 p-4 bg-stone-50 rounded-xl border border-gray-100 overflow-auto">
-            <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Estado del Formulario:</p>
-            <pre class="text-xs font-mono text-gray-700">{{ formfood.status }}</pre>
-            <hr class="my-3 border-gray-200">
-            <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Valores (JSON):</p>
-            <pre class="text-xs font-mono text-gray-700">{{ formfood.value | json }}</pre>
-        </div>
     </div>
 </div>
 }
