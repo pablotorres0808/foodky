@@ -44,10 +44,11 @@ export class Navbar {
 
     console.log('valor del formulario', newFood, 'newfood supabase', 'post food');
 
-    // guardamos en supabase
-    await this.foodService.insertFood(newFood);
-
-    this.formfood.reset({ available: true });
+    // Cerramos el modal e inicializamos el form al instante
     this.isModalOpen.set(false);
+    this.formfood.reset({ available: true });
+
+    // guardamos en supabase en segundo plano
+    await this.foodService.insertFood(newFood);
   }
 }
