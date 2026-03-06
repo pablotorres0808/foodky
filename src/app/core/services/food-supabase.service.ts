@@ -27,8 +27,7 @@ export class FoodSupabaseService {
         let { data, error } = await this.supabase
             .from('foods')
             .select('*')
-            .order('id', { ascending: true })
-            .limit(3);
+            .order('id', { ascending: true });
 
         if (error) {
             console.error('Error fetching foods:', error);

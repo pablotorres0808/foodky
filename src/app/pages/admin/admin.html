@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-stone-50 pt-28 md:pt-32 px-5 md:px-10 pb-10 flex flex-col">
+    <div class="max-w-7xl w-full mx-auto">
+        <header class="mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="text-4xl font-black text-gray-900 tracking-tight mb-2">
+                    Panel de <span class="text-red-500">Administración</span>
+                </h2>
+                <p class="text-gray-500 font-medium">Listado detallado de los platillos en el sistema.</p>
+            </div>
+        </header>
+
+        <!-- tabla de platillos simplificada -->
+        <div
+            class="bg-white rounded-[2.5rem] shadow-[0_8px_32px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-stone-50/50 border-b border-gray-100">
+                            <th class="px-6 py-5 text-sm font-black text-gray-900 uppercase tracking-wider">Imagen</th>
+                            <th class="px-6 py-5 text-sm font-black text-gray-900 uppercase tracking-wider">Nombre</th>
+                            <th class="px-6 py-5 text-sm font-black text-gray-900 uppercase tracking-wider">Descripción
+                            </th>
+                            <th class="px-6 py-5 text-sm font-black text-gray-900 uppercase tracking-wider">Categoría
+                            </th>
+                            <th class="px-6 py-5 text-sm font-black text-gray-900 uppercase tracking-wider">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @for (food of foods; track food.id) {
+                        <tr class="hover:bg-stone-50/30 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div
+                                    class="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-100 shadow-sm">
+                                    <img [src]="food.url_img" [alt]="food.name" class="w-full h-full object-cover" />
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="font-bold text-gray-900">{{ food.name }}</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-500 max-w-xs line-clamp-2">{{ food.description }}</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold border border-red-100 uppercase tracking-wider">
+                                    {{ food.category }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="font-black text-gray-900 text-lg">${{ food.price }}</div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (foods.length === 0) {
+            <div class="p-20 text-center">
+                <div class="inline-flex items-center justify-center p-4 bg-gray-50 rounded-full mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-300" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 00-2 2H6a2 2 0 00-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900">No hay platillos registrados</h3>
+                <p class="text-gray-400">Comienza agregando uno nuevo desde el menú principal.</p>
+            </div>
+            }
+        </div>
+    </div>
+</div>

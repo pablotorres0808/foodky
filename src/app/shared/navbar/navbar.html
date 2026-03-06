@@ -3,26 +3,31 @@
         class="bg-white border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-[2rem] md:rounded-[2.5rem] px-4 md:px-8 py-3 md:py-4 flex items-center justify-between transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
 
         <!-- el logo -->
-        <div class="flex items-center gap-2 md:gap-3 group cursor-pointer">
+        <a routerLink="/" class="flex items-center gap-2 md:gap-3 group cursor-pointer">
             <img src="/favicon.png" alt="RecetasApp Logo"
                 class="w-10 h-10 object-contain transition-transform group-hover:rotate-12" />
             <span
                 class="text-xl font-black bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent tracking-tight">
                 Recetas<span class="text-gray-900">App</span>
             </span>
-        </div>
+        </a>
 
         <!-- links -->
         <div class="hidden md:flex items-center gap-8">
-            <a href="#"
-                class="text-gray-900 font-bold text-sm tracking-wide transition-colors hover:text-red-500 relative group cursor-pointer">
+            <a routerLink="/" routerLinkActive #rlaHome="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+                class="text-gray-500 font-bold text-sm tracking-wide transition-colors hover:text-red-500 relative group cursor-pointer"
+                [class.text-red-500]="rlaHome.isActive">
                 Inicio
-                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all group-hover:w-full"></span>
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-red-500 transition-all group-hover:w-full"
+                    [class.w-full]="rlaHome.isActive" [class.w-0]="!rlaHome.isActive"></span>
             </a>
-            <a href="#"
-                class="text-gray-500 font-bold text-sm tracking-wide transition-colors hover:text-gray-900 cursor-pointer">Recetas</a>
-            <a href="#"
-                class="text-gray-500 font-bold text-sm tracking-wide transition-colors hover:text-gray-900 cursor-pointer">Categorías</a>
+            <a routerLink="/admin" routerLinkActive #rlaAdmin="routerLinkActive"
+                class="text-gray-500 font-bold text-sm tracking-wide transition-colors hover:text-red-500 relative group cursor-pointer"
+                [class.text-red-500]="rlaAdmin.isActive">
+                Administrador
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-red-500 transition-all group-hover:w-full"
+                    [class.w-full]="rlaAdmin.isActive" [class.w-0]="!rlaAdmin.isActive"></span>
+            </a>
         </div>
 
         <!-- los botones del lado derecho -->
@@ -85,10 +90,10 @@
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">IMG URL:</label>
                     <input formControlName="url_img" type="text" placeholder="https://..."
                         class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
-                        [class.border-red-500]="formfood.get('url_img')?.invalid && formfood.get('url_img')?.touched" />
-                    @if (formfood.get('url_img')?.invalid && formfood.get('url_img')?.touched) {
+                        [class.border-red-500]="isValid('url_img')" />
+                    @if (isValid('url_img')) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa una URL válida
+                        {{ getErrorMessage('url_img') }}
                     </span>
                     }
                 </div>
@@ -96,10 +101,10 @@
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Nombre:</label>
                     <input formControlName="name" type="text" placeholder="Ej. Tacos al Pastor"
                         class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
-                        [class.border-red-500]="formfood.get('name')?.invalid && formfood.get('name')?.touched" />
-                    @if (formfood.get('name')?.invalid && formfood.get('name')?.touched) {
+                        [class.border-red-500]="isValid('name')" />
+                    @if (isValid('name')) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa un nombre válido
+                        {{ getErrorMessage('name') }}
                     </span>
                     }
                 </div>
@@ -110,10 +115,10 @@
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Precio:</label>
                     <input formControlName="price" type="number" placeholder="Ej. 120" min="0" step="0.01"
                         class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
-                        [class.border-red-500]="formfood.get('price')?.invalid && formfood.get('price')?.touched" />
-                    @if (formfood.get('price')?.invalid && formfood.get('price')?.touched) {
+                        [class.border-red-500]="isValid('price')" />
+                    @if (isValid('price')) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa un precio válido
+                        {{ getErrorMessage('price') }}
                     </span>
                     }
                 </div>
@@ -121,10 +126,10 @@
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Categoría:</label>
                     <input formControlName="category" type="text" placeholder="Ej. Mexicana"
                         class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none"
-                        [class.border-red-500]="formfood.get('category')?.invalid && formfood.get('category')?.touched" />
-                    @if (formfood.get('category')?.invalid && formfood.get('category')?.touched) {
+                        [class.border-red-500]="isValid('category')" />
+                    @if (isValid('category')) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa una categoría válida
+                        {{ getErrorMessage('category') }}
                     </span>
                     }
                 </div>
@@ -135,10 +140,10 @@
                     <label class="block mb-1.5 text-sm font-bold text-gray-700">Descripción:</label>
                     <textarea formControlName="description" rows="2" placeholder="Descripción del platillo..."
                         class="w-full bg-stone-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-red-500 focus:border-red-500 block p-3 transition-colors outline-none resize-none"
-                        [class.border-red-500]="formfood.get('description')?.invalid && formfood.get('description')?.touched"></textarea>
-                    @if (formfood.get('description')?.invalid && formfood.get('description')?.touched) {
+                        [class.border-red-500]="isValid('description')"></textarea>
+                    @if (isValid('description')) {
                     <span class="mt-1.5 text-xs text-red-500 font-medium block">
-                        Por favor ingresa una descripción válida
+                        {{ getErrorMessage('description') }}
                     </span>
                     }
                 </div>
