@@ -51,4 +51,18 @@ export class FoodSupabaseService {
 
         return data;
     }
+
+    async deleteFood(id: number) {
+        const { data, error } = await this.supabase
+            .from('foods')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error deleting food:', error);
+            return null;
+        }
+
+        return data;
+    }
 }

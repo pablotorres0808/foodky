@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FoodSupabaseService } from '../../core/services/food-supabase.service';
 import { NewFood } from '../../interfaces/food.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -88,10 +89,37 @@ export class Navbar {
     console.log('valor del formulario', newFood, 'newfood supabase', 'post food');
 
     // guardamos en supabase
-    await this.foodService.insertFood(newFood);
+    const result = await this.foodService.insertFood(newFood);
 
-    // Cerramos el modal e inicializamos el form después de guardar
-    this.isModalOpen.set(false);
-    this.formfood.reset({ available: true });
+    if (result) {
+      Swal.fire({
+        title: '¡Platillo guardado!',
+        text: `El platillo "${name}" se ha registrado correctamente.`,
+        icon: 'success',
+        confirmButtonColor: '#ef4444',
+        background: '#ffffff',
+        color: '#1c1917',
+        width: '32rem',
+        customClass: {
+          popup: 'rounded-[2.5rem]',
+          confirmButton: 'rounded-2xl px-6 py-3 font-bold'
+        }
+      });
+
+      // Cerramos el modal e inicializamos el form después de guardar
+      this.isModalOpen.set(false);
+      this.formfood.reset({ available: true });
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo guardar el platillo. Intenta de nuevo.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+        customClass: {
+          popup: 'rounded-[2.5rem]',
+          confirmButton: 'rounded-2xl px-6 py-3 font-bold'
+        }
+      });
+    }
   }
 }
