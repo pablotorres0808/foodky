@@ -1,9 +1,10 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, effect } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FoodSupabaseService } from '../../core/services/food-supabase.service';
-import { NewFood } from '../../interfaces/food.interface';
+import { ModalService } from '../../core/services/modal.service';
+import { Food, NewFood } from '../../interfaces/food.interface';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +17,7 @@ import Swal from 'sweetalert2';
 export class Navbar {
   private fb = inject(FormBuilder);
   private foodService = inject(FoodSupabaseService);
-  isModalOpen = signal(false);
+  public modalService = inject(ModalService);
 
   formfood: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(5)]],
@@ -26,6 +27,17 @@ export class Navbar {
     description: ['', [Validators.required, Validators.minLength(15)]],
     url_img: ['', Validators.required]
   });
+
+  constructor() {
+    effect(() => {
+      const food = this.modalService.editingFood();
+      if (food) {
+        this.formfood.patchValue(food);
+      } else {
+        this.formfood.reset({ available: true });
+      }
+    });
+  }
 
   errorMessages: any = {
     name: {
@@ -76,25 +88,29 @@ export class Navbar {
       return;
     }
 
-    // preparamos el objeto para supabase (sin id ni created_at)
-    const { name, description, price, url_img, category } = this.formfood.value;
-    const newFood: NewFood = {
+    const { name, description, price, url_img, category, available } = this.formfood.value;
+    const foodData: NewFood = {
       name,
       description,
       price,
       url_img,
-      category
+      category,
+      available
     };
 
-    console.log('valor del formulario', newFood, 'newfood supabase', 'post food');
+    const editingFood = this.modalService.editingFood();
+    let result;
 
-    // guardamos en supabase
-    const result = await this.foodService.insertFood(newFood);
+    if (editingFood) {
+      result = await this.foodService.updateFood(editingFood.id, foodData);
+    } else {
+      result = await this.foodService.insertFood(foodData);
+    }
 
     if (result) {
       Swal.fire({
-        title: '¡Platillo guardado!',
-        text: `El platillo "${name}" se ha registrado correctamente.`,
+        title: editingFood ? '¡Platillo actualizado!' : '¡Platillo guardado!',
+        text: `El platillo "${name}" se ha ${editingFood ? 'actualizado' : 'registrado'} correctamente.`,
         icon: 'success',
         confirmButtonColor: '#ef4444',
         background: '#ffffff',
@@ -106,17 +122,17 @@ export class Navbar {
         }
       });
 
-      // Cerramos el modal e inicializamos el form después de guardar
-      this.isModalOpen.set(false);
-      this.formfood.reset({ available: true });
+      this.modalService.close();
+      this.foodService.notifyRefresh();
     } else {
       Swal.fire({
         title: 'Error',
-        text: 'No se pudo guardar el platillo. Intenta de nuevo.',
+        text: 'No se pudo procesar la solicitud. Intenta de nuevo.',
         icon: 'error',
         confirmButtonColor: '#ef4444',
+        width: '32rem',
         customClass: {
-          popup: 'rounded-[2.5rem]',
+          popup: 'rounded-[1.5rem]',
           confirmButton: 'rounded-2xl px-6 py-3 font-bold'
         }
       });

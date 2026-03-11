@@ -15,4 +15,5 @@ export interface NewFood {
     price: number;
     url_img: string;
     category: string;
+    available?: boolean;
 }

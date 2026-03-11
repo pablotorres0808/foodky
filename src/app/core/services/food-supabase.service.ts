@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment.development';
 import { NewFood } from '../../interfaces/food.interface';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FoodSupabaseService {
     private supabase: SupabaseClient;
+    public refresh$ = new Subject<void>();
 
     constructor() {
         this.supabase = createClient(
@@ -21,6 +23,10 @@ export class FoodSupabaseService {
         );
 
         this.getFood();
+    }
+
+    notifyRefresh() {
+        this.refresh$.next();
     }
 
     async getFood() {
@@ -60,6 +66,22 @@ export class FoodSupabaseService {
 
         if (error) {
             console.error('Error deleting food:', error);
+            return null;
+        }
+
+        this.notifyRefresh();
+        return data;
+    }
+
+    async updateFood(id: number, food: NewFood) {
+        const { data, error } = await this.supabase
+            .from('foods')
+            .update(food)
+            .eq('id', id)
+            .select();
+
+        if (error) {
+            console.error('Error updating food:', error);
             return null;
         }
 

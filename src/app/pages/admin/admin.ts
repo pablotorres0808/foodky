@@ -1,6 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FoodSupabaseService } from '../../core/services/food-supabase.service';
+import { ModalService } from '../../core/services/modal.service';
 import { Food } from '../../interfaces/food.interface';
 import Swal from 'sweetalert2';
 
@@ -12,10 +14,19 @@ import Swal from 'sweetalert2';
 })
 export class Admin implements OnInit {
     private foodService = inject(FoodSupabaseService);
+    public modalService = inject(ModalService);
+    private destroyRef = inject(DestroyRef);
     foods: Food[] = [];
 
     async ngOnInit() {
         await this.loadFoods();
+
+        // Actualización reactiva
+        this.foodService.refresh$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+                this.loadFoods();
+            });
     }
 
     async loadFoods() {
@@ -25,7 +36,12 @@ export class Admin implements OnInit {
         }
     }
 
+    editFood(food: Food) {
+        this.modalService.openForEdit(food);
+    }
+
     async deleteFood(food: Food) {
+        // ... (remaining of the method)
         if (!food.id) return;
 
         const result = await Swal.fire({
