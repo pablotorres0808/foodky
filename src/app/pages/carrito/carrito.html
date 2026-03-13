@@ -7,7 +7,201 @@
             <p class="text-gray-500 font-medium italic">Gestiona tus platillos seleccionados aquí.</p>
         </header>
 
-        <div
+        <!-- Static Cart Items for Demonstration -->
+        <div class="space-y-8 mb-16">
+            <!-- Item 1 -->
+            <div
+                class="group relative bg-white rounded-[3rem] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-gray-200 transition-all duration-700 hover:-translate-y-2">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Image -->
+                    <div class="relative h-32 w-32 rounded-[2rem] overflow-hidden shadow-inner bg-stone-100 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200"
+                            alt="Platillo"
+                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="flex-grow text-center md:text-left">
+                        <div class="flex items-center gap-2 mb-2 justify-center md:justify-start">
+                            <span class="text-[10px] font-black uppercase tracking-[0.15em] text-red-500/80">
+                                Ensaladas
+                            </span>
+                            <div class="h-px w-12 bg-stone-100 hidden md:block"></div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-2xl font-black text-gray-900 tracking-tight leading-tight">Ensalada de
+                                    Quinoa y Aguacate</h3>
+                                <p class="text-gray-500 text-[11px] font-medium italic opacity-75 mt-1">"Con aderezo
+                                    cítrico y frutos secos."</p>
+                            </div>
+                            <div class="text-2xl font-black text-orange-500 tracking-tighter">
+                                $12.50
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div
+                        class="flex items-center gap-6 border-t md:border-t-0 md:border-l border-stone-100 pt-6 md:pt-0 md:pl-8 w-full md:w-auto justify-between md:justify-start">
+                        <div class="flex items-center bg-stone-50 rounded-2xl p-1.5 border border-stone-100 shadow-sm">
+                            <button
+                                class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                </svg>
+                            </button>
+                            <span class="w-10 text-center font-black text-gray-900 text-lg">1</span>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <button
+                            class="group/del w-12 h-12 flex items-center justify-center bg-red-50 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all duration-500 active:scale-90 shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 transition-transform group-hover/del:rotate-12" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div
+                class="group relative bg-white rounded-[3rem] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-gray-200 transition-all duration-700 hover:-translate-y-2">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Image -->
+                    <div class="relative h-32 w-32 rounded-[2rem] overflow-hidden shadow-inner bg-stone-100 shrink-0">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=200"
+                            alt="Platillo"
+                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="flex-grow text-center md:text-left">
+                        <div class="flex items-center gap-2 mb-2 justify-center md:justify-start">
+                            <span class="text-[10px] font-black uppercase tracking-[0.15em] text-red-500/80">
+                                Hamburgesas
+                            </span>
+                            <div class="h-px w-12 bg-stone-100 hidden md:block"></div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-2xl font-black text-gray-900 tracking-tight leading-tight">Classic Wagyu
+                                    Burger</h3>
+                                <p class="text-gray-500 text-[11px] font-medium italic opacity-75 mt-1">"Carne de res
+                                    premium, queso cheddar y salsa secreta."</p>
+                            </div>
+                            <div class="text-2xl font-black text-orange-500 tracking-tighter">
+                                $18.90
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div
+                        class="flex items-center gap-6 border-t md:border-t-0 md:border-l border-stone-100 pt-6 md:pt-0 md:pl-8 w-full md:w-auto justify-between md:justify-start">
+                        <div class="flex items-center bg-stone-50 rounded-2xl p-1.5 border border-stone-100 shadow-sm">
+                            <button
+                                class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                                </svg>
+                            </button>
+                            <span class="w-10 text-center font-black text-gray-900 text-lg">2</span>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors active:scale-90">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <button
+                            class="group/del w-12 h-12 flex items-center justify-center bg-red-50 text-red-500 rounded-2xl hover:bg-red-500 hover:text-white transition-all duration-500 active:scale-90 shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 transition-transform group-hover/del:rotate-12" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Summary -->
+        <div class="relative mb-12">
+            <!-- Glow Effect -->
+            <div class="absolute -inset-4 bg-gradient-to-tr from-orange-500/10 to-red-500/10 rounded-[4rem] blur-2xl">
+            </div>
+
+            <div
+                class="relative bg-gray-900 rounded-[3rem] p-10 md:p-14 shadow-2xl border border-white/5 overflow-hidden group">
+                <!-- Abstract patterns -->
+                <div
+                    class="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl -mr-20 -mt-20 group-hover:bg-red-500/20 transition-colors duration-1000">
+                </div>
+
+                <div class="relative flex flex-col md:flex-row justify-between items-center gap-10">
+                    <div class="flex flex-col gap-2 text-center md:text-left">
+                        <span class="text-red-500 font-black uppercase tracking-[0.2em] text-[10px]">Resumen del
+                            pedido</span>
+                        <div class="flex items-baseline gap-2 justify-center md:justify-start">
+                            <span class="text-white/40 text-xl font-medium">$</span>
+                            <h3 class="text-5xl md:text-6xl font-black text-white tracking-tighter">50.30</h3>
+                        </div>
+                        <p class="text-white/30 text-[10px] font-bold uppercase tracking-widest mt-2">Incluye impuestos
+                            y servicio</p>
+                    </div>
+
+                    <!-- OUR STYLE BUTTON -->
+                    <div class="w-full md:w-auto">
+                        <div class="relative">
+                            <div class="bg-gradient-to-b from-red-500/20 to-transparent p-[1.5px] rounded-[22px]">
+                                <button
+                                    class="group/btn w-full md:w-auto min-w-[240px] p-[2.5px] rounded-[20.5px] bg-gradient-to-b from-white/10 to-transparent shadow-2xl active:scale-95 transition-all duration-300 cursor-pointer">
+                                    <div
+                                        class="bg-gradient-to-br from-red-500 to-red-600 rounded-[18px] px-8 py-5 transition-all duration-500 group-hover/btn:from-orange-500 group-hover/btn:to-orange-600 shadow-[0_10px_40px_rgba(239,68,68,0.3)]">
+                                        <div class="flex gap-4 items-center justify-center text-white">
+                                            <span class="font-black text-xs uppercase tracking-[0.2em]">Finalizar
+                                                Pedido</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4 transition-transform group-hover/btn:translate-x-1"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Empty Cart Message (Original, hidden for demo) -->
+        <div *ngIf="false"
             class="bg-white rounded-[2.5rem] border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.05)] p-12 text-center animate-in zoom-in-95 duration-500">
             <div class="w-24 h-24 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-stone-300" fill="none" viewBox="0 0 24 24"
@@ -42,5 +236,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
