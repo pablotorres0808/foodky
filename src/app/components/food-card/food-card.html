@@ -62,7 +62,7 @@
             <div class="w-full mt-auto">
                 <div [class.opacity-40]="!food.available" [class.grayscale]="!food.available" class="relative">
                     <div class="bg-gradient-to-b from-red-500/20 to-transparent p-[1.5px] rounded-[18px]">
-                        <button [disabled]="!food.available"
+                        <button [disabled]="!food.available" (click)="addToCarrito()"
                             class="group/btn w-full p-[2px] rounded-[16.5px] bg-gradient-to-b from-white to-orange-50/50 shadow-sm active:scale-95 transition-all duration-300 disabled:cursor-not-allowed cursor-pointer">
                             <div
                                 class="bg-gradient-to-br from-red-500 to-red-600 rounded-[14px] px-4 py-3 transition-colors group-hover/btn:from-orange-500 group-hover/btn:to-orange-600">

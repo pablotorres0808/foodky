@@ -57,10 +57,13 @@ export class Admin implements OnInit {
             background: '#ffffff',
             color: '#1c1917',
             width: '32rem',
+            backdrop: 'rgba(28,25,23,0.6)',
             customClass: {
-                popup: 'rounded-[2.5rem]',
-                confirmButton: 'rounded-2xl px-6 py-3 font-bold',
-                cancelButton: 'rounded-2xl px-6 py-3 font-bold'
+                popup: 'rounded-[3rem] shadow-[0_20px_80px_rgba(0,0,0,0.1)] border border-gray-100 p-12',
+                title: 'text-2xl font-black text-gray-900 tracking-tight mb-2',
+                htmlContainer: 'text-gray-500 font-medium',
+                confirmButton: 'bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-8 py-4 font-black uppercase tracking-widest text-[10px] text-white transition-all duration-300 active:scale-95 shadow-lg shadow-red-500/25 border-0 hover:from-orange-500 hover:to-orange-600 ml-4',
+                cancelButton: 'bg-stone-100 text-stone-600 rounded-2xl px-8 py-4 font-black uppercase tracking-widest text-[10px] transition-all duration-300 active:scale-95 border-0 hover:bg-stone-200 hover:text-stone-900'
             }
         });
 
@@ -73,10 +76,15 @@ export class Admin implements OnInit {
                 text: `El platillo "${food.name}" ha sido borrado correctamente.`,
                 icon: 'success',
                 confirmButtonColor: '#ef4444',
+                background: '#ffffff',
+                color: '#1c1917',
                 width: '32rem',
+                backdrop: 'rgba(28,25,23,0.6)',
                 customClass: {
-                    popup: 'rounded-[2.5rem]',
-                    confirmButton: 'rounded-2xl px-6 py-3 font-bold'
+                    popup: 'rounded-[3rem] shadow-[0_20px_80px_rgba(0,0,0,0.1)] border border-gray-100 p-12',
+                    title: 'text-2xl font-black text-gray-900 tracking-tight mb-2',
+                    htmlContainer: 'text-gray-500 font-medium',
+                    confirmButton: 'bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-8 py-4 font-black uppercase tracking-widest text-[10px] text-white transition-all duration-300 active:scale-95 shadow-lg shadow-red-500/25 border-0 hover:from-orange-500 hover:to-orange-600'
                 }
             });
         }

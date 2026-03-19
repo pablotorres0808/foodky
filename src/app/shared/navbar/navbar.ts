@@ -1,8 +1,9 @@
-import { Component, signal, inject, effect } from '@angular/core';
+import { Component, signal, inject, effect, OnInit } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FoodSupabaseService } from '../../core/services/food-supabase.service';
+import { CarritoSupabaseService } from '../../core/services/carrito-supabase.service';
 import { ModalService } from '../../core/services/modal.service';
 import { Food, NewFood } from '../../interfaces/food.interface';
 import Swal from 'sweetalert2';
@@ -14,10 +15,13 @@ import Swal from 'sweetalert2';
   templateUrl: './navbar.html',
   styles: ``,
 })
-export class Navbar {
+export class Navbar implements OnInit {
   private fb = inject(FormBuilder);
   private foodService = inject(FoodSupabaseService);
+  private carritoService = inject(CarritoSupabaseService);
   public modalService = inject(ModalService);
+
+  public cartItemsCount = signal<number>(0);
 
   formfood: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(5)]],
@@ -37,6 +41,18 @@ export class Navbar {
         this.formfood.reset({ available: true });
       }
     });
+  }
+
+  ngOnInit() {
+    this.loadCartCount();
+    this.carritoService.refresh$.subscribe(() => {
+      this.loadCartCount();
+    });
+  }
+
+  async loadCartCount() {
+    const items = await this.carritoService.getCarritoItems();
+    this.cartItemsCount.set(items.length);
   }
 
   errorMessages: any = {
@@ -116,9 +132,12 @@ export class Navbar {
         background: '#ffffff',
         color: '#1c1917',
         width: '32rem',
+        backdrop: 'rgba(28,25,23,0.6)',
         customClass: {
-          popup: 'rounded-[2.5rem]',
-          confirmButton: 'rounded-2xl px-6 py-3 font-bold'
+          popup: 'rounded-[3rem] shadow-[0_20px_80px_rgba(0,0,0,0.1)] border border-gray-100 p-12',
+          title: 'text-2xl font-black text-gray-900 tracking-tight mb-2',
+          htmlContainer: 'text-gray-500 font-medium',
+          confirmButton: 'bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-8 py-4 font-black uppercase tracking-widest text-[10px] text-white transition-all duration-300 active:scale-95 shadow-lg shadow-red-500/25 border-0 hover:from-orange-500 hover:to-orange-600'
         }
       });
 
@@ -130,10 +149,15 @@ export class Navbar {
         text: 'No se pudo procesar la solicitud. Intenta de nuevo.',
         icon: 'error',
         confirmButtonColor: '#ef4444',
+        background: '#ffffff',
+        color: '#1c1917',
         width: '32rem',
+        backdrop: 'rgba(28,25,23,0.6)',
         customClass: {
-          popup: 'rounded-[1.5rem]',
-          confirmButton: 'rounded-2xl px-6 py-3 font-bold'
+          popup: 'rounded-[3rem] shadow-[0_20px_80px_rgba(0,0,0,0.1)] border border-gray-100 p-12',
+          title: 'text-2xl font-black text-gray-900 tracking-tight mb-2',
+          htmlContainer: 'text-gray-500 font-medium',
+          confirmButton: 'bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-8 py-4 font-black uppercase tracking-widest text-[10px] text-white transition-all duration-300 active:scale-95 shadow-lg shadow-red-500/25 border-0 hover:from-orange-500 hover:to-orange-600'
         }
       });
     }

@@ -55,6 +55,7 @@ export class FoodSupabaseService {
             return null;
         }
 
+        this.notifyRefresh();
         return data;
     }
 
@@ -85,6 +86,7 @@ export class FoodSupabaseService {
             return null;
         }
 
+        this.notifyRefresh();
         return data;
     }
 }
